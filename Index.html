@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment to Imam ul huqe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        .payment-box {
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        .account-holder {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .amount {
+            font-size: 22px;
+            color: #2e7d32;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .upi-section {
+            margin: 20px 0;
+        }
+        .upi-label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .upi-id {
+            font-size: 18px;
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+        .copy-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+            white-space: nowrap;
+        }
+        .copy-btn:hover {
+            background: #3e8e41;
+        }
+        .utr-box {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed #ddd;
+        }
+        .utr-input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .submit-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        .submit-btn:hover {
+            background: #0b7dda;
+        }
+        .pending-message {
+            display: none;
+            margin-top: 25px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            color: #856404;
+            font-size: 16px;
+        }
+        .payment-method {
+            margin: 20px 0;
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-box">
+        <div class="account-holder">Account Holder: Imam ul huqe</div>
+        <div class="amount">Amount: ₹1200</div>
+        
+        <div class="upi-section">
+            <div class="upi-label">Pay via UPI:</div>
+            <div class="upi-id">
+                <span id="upiId">Yanu60161@okhdfcbank</span>
+                <button class="copy-btn" onclick="copyUpi()">Copy UPI ID</button>
+            </div>
+        </div>
+        
+        <div class="payment-method">
+            You can pay using any UPI app like Google Pay, PhonePe, Paytm, etc.
+        </div>
+        
+        <div class="utr-box">
+            <div>Enter UTR Number after payment:</div>
+            <input type="text" class="utr-input" id="utrNumber" placeholder="Enter 12-digit UTR number">
+            <button class="submit-btn" onclick="submitUtr()">Submit Payment Details</button>
+        </div>
+        
+        <div id="pendingMessage" class="pending-message">
+            <strong>Payment Pending Verification</strong><br>
+            Thank you for your payment of ₹1200. Your transaction is being processed.
+        </div>
+    </div>
+
+    <script>
+        function copyUpi() {
+            const upiId = document.getElementById('upiId');
+            const textArea = document.createElement('textarea');
+            textArea.value = upiId.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            const copyBtn = document.querySelector('.copy-btn');
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => {
+                copyBtn.textContent = 'Copy UPI ID';
+            }, 2000);
+        }
+        
+        function submitUtr() {
+            const utrNumber = document.getElementById('utrNumber').value.trim();
+            if (utrNumber === '') {
+                alert('Please enter UTR number');
+                return;
+            }
+            
+            if (!/^\d{12}$/.test(utrNumber)) {
+                alert('Please enter a valid 12-digit UTR number');
+                return;
+            }
+            
+            document.getElementById('pendingMessage').style.display = 'block';
+            document.getElementById('utrNumber').value = '';
+            
+            // Scroll to show the pending message
+            document.getElementById('pendingMessage').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
